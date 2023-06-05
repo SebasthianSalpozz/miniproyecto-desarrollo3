@@ -23,6 +23,7 @@ export const LoginPage: React.FC<{}>= () =>{
     const handleSubmit =(e: React.FormEvent<HTMLInputElement>)=>{
         e.preventDefault();
         console.log(loginData)
+        window.location.href = "/scaper"
     }
     return(
         <Container maxWidth = "sm">
@@ -53,8 +54,9 @@ export const LoginPage: React.FC<{}>= () =>{
                                     margin = "normal"
                                     type = "text" 
                                     label = "Email" 
+                                    onChange={dataLogin}
                                     required
-                                    onChange={dataLogin}/>
+                                />
                                 <TextField                                
                                     fullWidth
                                     name="password"
@@ -63,10 +65,11 @@ export const LoginPage: React.FC<{}>= () =>{
                                     label = "Password" 
                                     required
                                     onChange={dataLogin}/>
+                                <Button fullWidth type="submit" variant= "contained" sx = {{mt:2, mb:2}} >
+                                    Iniciar Sesion
+                                </Button>
                             </Stack>
-                            <Button fullWidth type="submit" variant= "contained" sx = {{mt:2, mb:2}}>
-                                Iniciar Sesion
-                            </Button>    
+
                         </Box>
                     </Paper>
                 </Grid>
