@@ -1,80 +1,98 @@
 import React from "react";
-import {Button, Container, Grid, Paper, Stack} from "@mui/material"
+import { Button, Container, Grid, Paper, Stack } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { TextField } from "@mui/material";
 
-type LoginType ={
+type LoginType = {
     username: string;
     email: string;
     password: string;
-}
-export const LoginPage: React.FC<{}>= () =>{
-    const[loginData, setLoginData]= React.useState<LoginType>({
-        username:"",
+};
+
+export const LoginPage: React.FC<{}> = () => {
+    const [loginData, setLoginData] = React.useState<LoginType>({
+        username: "",
         email: "",
-        password:""
+        password: ""
     });
 
-    const dataLogin =(e: React.ChangeEvent<HTMLInputElement>)=>{
-        setLoginData({...loginData, [e.target.name]:e.target.value})
-    }
+    const dataLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    };
 
-    const handleSubmit =(e: React.FormEvent<HTMLInputElement>)=>{
+    const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
         e.preventDefault();
-        console.log(loginData)
-        window.location.href = "/scaper"
-    }
-    return(
-        <Container maxWidth = "sm">
+        const isValidEmail = validateEmail(loginData.email);
+        if (!isValidEmail) {
+            console.log("Invalid email format");
+            return;
+        }
+        console.log(loginData);
+        window.location.href = "/scaper";
+    };
+
+    const validateEmail = (email: string): boolean => {
+        const regex = /^[A-Za-z0-9]+(?:\.[A-Za-z0-9]+)*@(?:gmail)\.com$/;
+        return regex.test(email);
+    };
+
+    return (
+        <Container maxWidth="sm">
             <Grid
                 container
                 direction="column"
-                alignItems = "center"
+                alignItems="center"
                 justifyContent="center"
-                sx={{minHeight: "100vh"}}>
+                sx={{ minHeight: "100vh" }}
+            >
                 <Grid item>
-                    <Paper sx={{padding:"1.2em", borderRadius:"0.5em"}}>
-                        <Typography variant ="h4" sx ={{mt: 2, mb: 2}}>
+                    <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
+                        <Typography variant="h4" sx={{ mt: 2, mb: 2 }}>
                             Log In
                         </Typography>
-                        <Box component = "form" onSubmit={handleSubmit}>
+                        <Box component="form" onSubmit={handleSubmit}>
                             <Stack spacing={2}>
-                                <TextField                                      
+                                <TextField
                                     fullWidth
                                     name="username"
-                                    margin = "normal"
-                                    type = "text" 
-                                    label = "User Name" 
+                                    margin="normal"
+                                    type="text"
+                                    label="User Name"
                                     required
-                                    onChange={dataLogin}/>
-                                <TextField                                      
+                                    onChange={dataLogin}
+                                />
+                                <TextField
                                     fullWidth
                                     name="email"
-                                    margin = "normal"
-                                    type = "text" 
-                                    label = "Email" 
+                                    margin="normal"
+                                    type="text"
+                                    label="Email"
                                     onChange={dataLogin}
                                     required
                                 />
-                                <TextField                                
+                                <TextField
                                     fullWidth
                                     name="password"
-                                    margin = "normal"
-                                    type="password" 
-                                    label = "Password" 
+                                    margin="normal"
+                                    type="password"
+                                    label="Password"
                                     required
-                                    onChange={dataLogin}/>
-                                <Button fullWidth type="submit" variant= "contained" sx = {{mt:2, mb:2}} >
+                                    onChange={dataLogin}
+                                />
+                                <Button
+                                    fullWidth
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{ mt: 2, mb: 2 }}
+                                >
                                     Iniciar Sesion
                                 </Button>
                             </Stack>
-
                         </Box>
                     </Paper>
                 </Grid>
             </Grid>
-
         </Container>
     );
 };
